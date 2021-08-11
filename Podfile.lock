@@ -1,0 +1,38 @@
+PODS:
+  - Alamofire (5.4.3)
+  - Bond (7.8.1):
+    - Differ (~> 1.4)
+    - ReactiveKit (~> 3.14)
+  - Differ (1.4.5)
+  - ReactiveKit (3.17.4)
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
+  - Swinject (2.7.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - Bond
+  - SDWebImage
+  - Swinject
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Bond
+    - Differ
+    - ReactiveKit
+    - SDWebImage
+    - Swinject
+
+SPEC CHECKSUMS:
+  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
+  Differ: 3b6bd78e2b20cc795d9a86f7641d087524e4273e
+  ReactiveKit: f9f9e079efa39312c597bf1508ef4810d111ce76
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
+
+PODFILE CHECKSUM: d0f499c1fcb033d6e512fe970453cb960621dd1f
+
+COCOAPODS: 1.10.1

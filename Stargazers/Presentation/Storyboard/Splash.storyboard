@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dt4-84-Jwn">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="wg8-de-Bol">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="dt4-84-Jwn" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eP2-Fc-ARp">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="HLg-Gf-nw5" kind="relationship" relationship="rootViewController" id="asD-PF-hsJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t12-Dp-dCk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-245" y="183"/>
+        </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="Dfw-xy-Kl7">
+            <objects>
+                <viewController storyboardIdentifier="splash_vc" id="HLg-Gf-nw5" customClass="SplashViewController" customModule="Stargazers" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dCb-wN-Gbt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfm-HJ-ysD">
+                                <rect key="frame" x="10" y="414.5" width="394" height="67"/>
+                                <string key="text">Subito Assessment
+Github stargazers</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2a6-bO-D4H"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <accessibility key="accessibilityConfiguration" identifier="splashViewControllerIdentifier"/>
+                        <constraints>
+                            <constraint firstItem="2a6-bO-D4H" firstAttribute="trailing" secondItem="dfm-HJ-ysD" secondAttribute="trailing" constant="10" id="RhH-9u-bjn"/>
+                            <constraint firstItem="dfm-HJ-ysD" firstAttribute="leading" secondItem="2a6-bO-D4H" secondAttribute="leading" constant="10" id="izO-cU-1AQ"/>
+                            <constraint firstItem="dfm-HJ-ysD" firstAttribute="centerY" secondItem="dCb-wN-Gbt" secondAttribute="centerY" id="rrj-A7-sww"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="NS0-2e-U35"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c3V-WL-nIJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="591" y="183"/>
+        </scene>
+    </scenes>
+</document>
