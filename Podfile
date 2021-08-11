@@ -9,6 +9,7 @@ target 'Stargazers' do
   pod 'Bond'
   pod 'Alamofire'
   pod 'SDWebImage'
+  pod 'lottie-ios'
 
   target 'StargazersTests' do
     inherit! :search_paths

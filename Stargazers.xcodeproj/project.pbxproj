@@ -50,6 +50,7 @@
 		2D9B5EE326C1CA9600AF3E4E /* StargazersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9B5EE226C1CA9600AF3E4E /* StargazersUITests.swift */; };
 		2DA7306B26C3B2E600AB6562 /* StargazerRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7306A26C3B2E600AB6562 /* StargazerRepositoryTest.swift */; };
 		2DA7307326C3B32200AB6562 /* StargazersIntegrationRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7307226C3B32200AB6562 /* StargazersIntegrationRepositoryTest.swift */; };
+		2DA730F126C4208700AB6562 /* happy-star.json in Resources */ = {isa = PBXBuildFile; fileRef = 2DA730F026C4208700AB6562 /* happy-star.json */; };
 		2DF3C18526C2790800AF5064 /* StargazerDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF3C18426C2790800AF5064 /* StargazerDTOMapper.swift */; };
 		4BAA1C9C982C073FC9034145 /* Pods_Stargazers_StargazersUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB513685053EE763F0399DE1 /* Pods_Stargazers_StargazersUITests.framework */; };
 		8DDEC7FC355C9CFA0F502EC9 /* Pods_Stargazers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E95DCA195E48293B2A393433 /* Pods_Stargazers.framework */; };
@@ -126,6 +127,7 @@
 		2D9B5EE426C1CA9600AF3E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DA7306A26C3B2E600AB6562 /* StargazerRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StargazerRepositoryTest.swift; sourceTree = "<group>"; };
 		2DA7307226C3B32200AB6562 /* StargazersIntegrationRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StargazersIntegrationRepositoryTest.swift; sourceTree = "<group>"; };
+		2DA730F026C4208700AB6562 /* happy-star.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "happy-star.json"; sourceTree = "<group>"; };
 		2DF3C18426C2790800AF5064 /* StargazerDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StargazerDTOMapper.swift; sourceTree = "<group>"; };
 		4EC0D796662F90B0396B46BB /* Pods_StargazersTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StargazersTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65D52DD17500FA7486B7AF39 /* Pods-StargazersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StargazersTests.debug.xcconfig"; path = "Target Support Files/Pods-StargazersTests/Pods-StargazersTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 		2D9B5EBF26C1CA9500AF3E4E /* Stargazers */ = {
 			isa = PBXGroup;
 			children = (
+				2DA730DA26C4172C00AB6562 /* Animation */,
 				2D9200FE26C1CBE30072EFF5 /* AppDelegate */,
 				2D92015826C1D1040072EFF5 /* Application */,
 				2D9B5EC926C1CA9500AF3E4E /* Assets.xcassets */,
@@ -525,6 +528,14 @@
 				2D9B5ED726C1CA9500AF3E4E /* StargazersUseCaseTests.swift */,
 			);
 			path = UseCase;
+			sourceTree = "<group>";
+		};
+		2DA730DA26C4172C00AB6562 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				2DA730F026C4208700AB6562 /* happy-star.json */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		2DF3C17D26C275CA00AF5064 /* Mapper */ = {
@@ -682,6 +693,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DA730F126C4208700AB6562 /* happy-star.json in Resources */,
 				2D9B5ECA26C1CA9500AF3E4E /* Assets.xcassets in Resources */,
 				2D2C905326C2D16D000E55FB /* StargazerCell.xib in Resources */,
 				2D9B5EC826C1CA9500AF3E4E /* Main.storyboard in Resources */,
@@ -1063,7 +1075,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 65D52DD17500FA7486B7AF39 /* Pods-StargazersTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GB5KHBW76F;
@@ -1086,7 +1098,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 016BC1916120BBD7B728808D /* Pods-StargazersTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GB5KHBW76F;
@@ -1109,7 +1121,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E6D37689E2BE26E4C4B3049F /* Pods-Stargazers-StargazersUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GB5KHBW76F;
 				INFOPLIST_FILE = StargazersUITests/Info.plist;
@@ -1130,7 +1142,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B839F585B59FF9FBFC723F22 /* Pods-Stargazers-StargazersUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GB5KHBW76F;
 				INFOPLIST_FILE = StargazersUITests/Info.plist;

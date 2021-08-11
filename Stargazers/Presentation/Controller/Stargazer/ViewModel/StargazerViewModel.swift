@@ -39,6 +39,8 @@ enum StargazerViewModelStatus {
     case searching
     case success
     case failure
+    case zeroStars
+    case easterEggs
 }
 
 //MARK: - Default implementation
@@ -57,6 +59,7 @@ class StargazerViewModelDefault: StargazerViewModel {
     private var _hasMoreToLoad = true
     private var _owner = ""
     private var _repository = ""
+    private var _isSubitoEasterEggShowed = false
     
     func search(for owner: String, repository: String) {
         stargazer = nil
@@ -94,16 +97,29 @@ extension StargazerViewModelDefault: StargazerUseCaseDelegate {
         print("Success - \(result.count) elements found.")
         error = nil
         errorMessage = nil
-        if( _currentPage == 1 ) {
-            stargazer = [Stargazer]()
+        
+        if( !_isSubitoEasterEggShowed && _owner.lowercased() == "subito-it" ) {
+            status.value = .easterEggs
+            _isSubitoEasterEggShowed = true
         }
         
-        _hasMoreToLoad = result.count > 0
-        stargazer?.append(contentsOf: result)
-        
-        print("\(stargazer?.count ?? 0) elements in list")
-        
-        status.value = .success
+        if( _currentPage == 1 && result.count == 0 ) {
+            _hasMoreToLoad = false
+            stargazer?.removeAll()
+            errorMessage = "\(_owner), for '\(_repository)' repository has not received any stars yet."
+            status.value = .zeroStars
+        } else {
+            if( _currentPage == 1 ) {
+                stargazer = [Stargazer]()
+            }
+            
+            _hasMoreToLoad = result.count > 0
+            stargazer?.append(contentsOf: result)
+            
+            print("\(stargazer?.count ?? 0) elements in list")
+            
+            status.value = .success
+        }
     }
     
     func onSearchFailed(error: NetworkError) {
@@ -112,7 +128,7 @@ extension StargazerViewModelDefault: StargazerUseCaseDelegate {
         if( error.networkErrorCode == .noConnection ) {
             errorMessage = error.errorDescription
         } else {
-            errorMessage = "Non trovato"
+            errorMessage = "Not found!"
         }
         status.value = .failure
     }

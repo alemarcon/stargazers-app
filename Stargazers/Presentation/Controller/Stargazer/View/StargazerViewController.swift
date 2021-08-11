@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 
 class StargazerViewController: BaseViewController {
     
@@ -16,9 +17,11 @@ class StargazerViewController: BaseViewController {
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var errorViewContainer: UIView!
     @IBOutlet weak var errorMessage: UILabel!
+    @IBOutlet weak var errorIcon: UIImageView!
     
     var viewModel: StargazerViewModel?
-
+    let animationView = AnimationView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -34,8 +37,24 @@ class StargazerViewController: BaseViewController {
     private func prepareUI() {
         updateSearchButtonUI(active: false)
         updateErrorView(isHidden: true, errorMessage: nil)
+        
+        let animation = Animation.named("happy-star")
+        animationView.animation = animation
+        animationView.contentMode = .scaleAspectFit
+        view.addSubview(animationView)
+        
+        animationView.backgroundBehavior = .pauseAndRestore
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        animationView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+        animationView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        
+        animationView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        animationView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        animationView.setContentCompressionResistancePriority(.fittingSizeLevel, for: .horizontal)
+        animationView.alpha = 0
     }
     
+    /// Register table view cells
     private func registerTableViewAndCell() {
         stargazerTable.dataSource = self
         stargazerTable.delegate = self
@@ -54,13 +73,25 @@ class StargazerViewController: BaseViewController {
         searchButton.tintColor = active ? .black : .white
     }
     
-    private func updateErrorView(isHidden: Bool, errorMessage: String?) {
+    /// Show or hide error view
+    /// - Parameters:
+    ///   - isHidden: TRUE if is hidden, FALSE otherwise
+    ///   - errorMessage: Message to show
+    ///   - isError: TRUE if is an error FALSE if is a message
+    private func updateErrorView(isHidden: Bool, errorMessage: String?, isError: Bool = true) {
+        var errorIconName = "warning_icon"
+        
+        if( !isError ) {
+            errorIconName = "sad_face"
+        }
+        errorIcon.image = UIImage(named: errorIconName)
         errorViewContainer.alpha = isHidden ? 0 : 1
         stargazerTable.alpha = isHidden ? 1 : 0
         self.errorMessage.text = errorMessage ?? ""
+        
     }
     
-    /// <#Description#>
+    /// Bind viewmodel with view controller
     private func bindViewModel() {
         
         if let viewModel = viewModel {
@@ -73,11 +104,18 @@ class StargazerViewController: BaseViewController {
                 case .searching:
                     print("Searching...")
                     self?.activity.startAnimating()
+                case .easterEggs:
+                    self?.activity.startAnimating()
+                    self?.runAnimation()
                 case .success:
                     print("Search success")
                     self?.activity.stopAnimating()
                     self?.updateErrorView(isHidden: true, errorMessage: nil)
                     self?.stargazerTable.reloadData()
+                case .zeroStars:
+                    print("Repo with no stars found!")
+                    self?.activity.stopAnimating()
+                    self?.updateErrorView(isHidden: false, errorMessage: viewModel.errorMessage, isError: false)
                 case .failure:
                     print("Search fails!")
                     self?.activity.stopAnimating()
@@ -88,6 +126,20 @@ class StargazerViewController: BaseViewController {
             print("View model is ni")
         }
         
+    }
+    
+    /// Run lottie animation
+    private func runAnimation() {
+        animationView.alpha = 1.0
+        animationView.play(fromProgress: 0, toProgress: 0.5, loopMode: .playOnce, completion: { (finished) in
+            if finished {
+                print("Animation Complete")
+                self.animationView.removeFromSuperview()
+                self.animationView.alpha = 0.0
+            } else {
+                print("Animation cancelled")
+            }
+        })
     }
     
     /// Method called on textfield editing change. Check if search textfields are empty and update UI state
@@ -139,11 +191,6 @@ extension StargazerViewController: UITableViewDataSource {
             return cell
         }
         return UITableViewCell()
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-        print("")
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -31,7 +31,7 @@ class StargazersUITests: XCTestCase {
         let errorContainerView = app.otherElements["viewContainerIdentifier"]
         XCTAssertFalse(errorContainerView.exists)
         
-        let searchButton = app.buttons["Cerca"]
+        let searchButton = app.buttons["Search"]
         XCTAssertFalse(searchButton.isEnabled)
         
         let ownertTextfield = app.textFields["ownerTextfieldIdentifier"]
