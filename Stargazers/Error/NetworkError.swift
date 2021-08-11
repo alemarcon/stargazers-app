@@ -13,6 +13,8 @@ enum NetworkErrorCode: Int {
     case generic = 600
     case jsonSerialization = 700
     case dataNil = 800
+    case timeout = 900
+    case noConnection = 1000
 }
 
 
@@ -29,6 +31,10 @@ enum NetworkError: Error {
     case jsonSerialization
     /// Error throws in case of response data nil
     case dataNil
+    //// Error throws in timeout case
+    case timeout
+    /// Error throws in case of missing internet connection
+    case noConnection
 }
 
 extension NetworkError: LocalizedError {
@@ -52,6 +58,10 @@ extension NetworkError: LocalizedError {
             
         case .dataNil:
             return NSLocalizedString("Response data is nil.", comment: "")
+        case .timeout:
+            return NSLocalizedString("HTTP Timeout", comment: "")
+        case .noConnection:
+            return NSLocalizedString("Sembra che tu sia offline. Controlla la tua connessione e riprova.", comment: "")
         }
         
     }
@@ -68,6 +78,10 @@ extension NetworkError: LocalizedError {
             return .jsonSerialization
         case .dataNil:
             return .dataNil
+        case .timeout:
+            return .timeout
+        case .noConnection:
+            return .noConnection
         }
     }
 }

@@ -22,50 +22,58 @@ class NetworkRequestPerfomer {
             .responseJSON { response in
                 do {
                     if response.error != nil {
-                        let localizedDesctiptionError: String = response.error?.localizedDescription ?? ""
-                        if response.data != nil {
-                            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                                print("Data response: \(utf8Text)")
+                        
+                        if let error = response.error, let underlyingError = error.underlyingError {
+                            if let urlError = underlyingError as? URLError {
+                                switch urlError.code {
+                                case .timedOut:
+                                    print("Timed out error")
+                                    failure(NetworkError.timeout)
+                                case .notConnectedToInternet:
+                                    print("Not connected")
+                                    failure(NetworkError.noConnection)
+                                default:
+                                    //Do something
+                                    print("Unmanaged error")
+                                    failure(NetworkError.generic(response.response?.statusCode ?? 0, "Unknow error"))
+                                }
                             }
                         } else {
-                            print("Error: \(localizedDesctiptionError)")
+                            failure(NetworkError.generic(response.response?.statusCode ?? 0, "Unknow error"))
                         }
-                        
-                        failure(NetworkError.generic(response.response?.statusCode ?? 0, localizedDesctiptionError))
-                        
                     } else {
                         if let responseData = response.data {
-                                
-                                if let statusCode = response.response?.statusCode {
-                                    
-                                    switch statusCode {
-                                        
-                                    case NetworkStatusCode.success.rawValue:
-                                        success(try JSONDecoder().decode(T.self, from: responseData))
-                                    
-                                    case NetworkStatusCode.notFound.rawValue:
-                                        do {
-                                            let jsonArray = try JSONSerialization.jsonObject(with: responseData, options : .allowFragments) as! [String:Any]
-                                            let message = jsonArray[MESSAGE] as? String ?? "No error message"
-                                            failure(NetworkError.notFound(message))
-                                        } catch(let error) {
-                                            print(error.localizedDescription)
-                                            failure(NetworkError.generic(statusCode, error.localizedDescription))
-                                        }
-                                    default:
-                                        do {
-                                            let jsonArray = try JSONSerialization.jsonObject(with: responseData, options : .allowFragments) as! [String:Any]
-                                            let message = jsonArray[MESSAGE] as? String ?? "No error message"
-                                            failure(NetworkError.notFound(message))
-                                        } catch(let error) {
-                                            print(error.localizedDescription)
-                                            failure(NetworkError.generic(statusCode, error.localizedDescription))
-                                        }
+
+                            if let statusCode = response.response?.statusCode {
+
+                                switch statusCode {
+
+                                case NetworkStatusCode.success.rawValue:
+                                    success(try JSONDecoder().decode(T.self, from: responseData))
+
+                                case NetworkStatusCode.notFound.rawValue:
+                                    do {
+                                        let jsonArray = try JSONSerialization.jsonObject(with: responseData, options : .allowFragments) as! [String:Any]
+                                        let message = jsonArray[MESSAGE] as? String ?? "No error message"
+                                        failure(NetworkError.notFound(message))
+                                    } catch(let error) {
+                                        print(error.localizedDescription)
+                                        failure(NetworkError.generic(statusCode, error.localizedDescription))
                                     }
-                                } else {
-                                    failure(NetworkError.generic(0, "No status code retrieved"))
+                                default:
+                                    do {
+                                        let jsonArray = try JSONSerialization.jsonObject(with: responseData, options : .allowFragments) as! [String:Any]
+                                        let message = jsonArray[MESSAGE] as? String ?? "No error message"
+                                        failure(NetworkError.notFound(message))
+                                    } catch(let error) {
+                                        print(error.localizedDescription)
+                                        failure(NetworkError.generic(statusCode, error.localizedDescription))
+                                    }
                                 }
-                            
+                            } else {
+                                failure(NetworkError.generic(0, "No status code retrieved"))
+                            }
+
                         } else {
                             failure(NetworkError.dataNil)
                         }
@@ -75,7 +83,7 @@ class NetworkRequestPerfomer {
                     print("Error: \(error)")
                     failure(NetworkError.generic(0, localizedErrorDescription))
                 }
-        }
+            }
     }
 
 }

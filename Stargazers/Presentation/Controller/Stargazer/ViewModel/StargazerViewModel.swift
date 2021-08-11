@@ -109,7 +109,11 @@ extension StargazerViewModelDefault: StargazerUseCaseDelegate {
     func onSearchFailed(error: NetworkError) {
         print("Error \(error.localizedDescription)")
         self.error = error
-        errorMessage = "Non trovato"
+        if( error.networkErrorCode == .noConnection ) {
+            errorMessage = error.errorDescription
+        } else {
+            errorMessage = "Non trovato"
+        }
         status.value = .failure
     }
     
